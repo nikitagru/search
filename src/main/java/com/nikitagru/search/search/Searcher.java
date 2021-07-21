@@ -23,6 +23,9 @@ public class Searcher {
 
         Reader reader = new Reader();
         String userInput = reader.consoleReader();
+        long start = System.currentTimeMillis();
+
+
         int [] prefixArr = createPrefixArr(userInput);
 
         String line = reader.getLine();
@@ -36,7 +39,11 @@ public class Searcher {
             line = reader.getLine();
         }
 
+        long finish = System.currentTimeMillis();
+        long timeElapsed = finish - start;
+
         printResult(resultLines);
+        System.out.println("Затраченное время: " + timeElapsed + "мс");
     }
 
     private void printResult(TreeSet<String> resultLines) {
