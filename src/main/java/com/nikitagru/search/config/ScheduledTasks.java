@@ -2,6 +2,7 @@ package com.nikitagru.search.config;
 
 import com.nikitagru.search.search.Searcher;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -12,6 +13,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class ScheduledTasks {
 
+    @Value("${search.column}")
+    private int searchColumn;
+
     @Autowired
     private ApplicationArguments applicationArguments;
 
@@ -20,7 +24,6 @@ public class ScheduledTasks {
      */
     @Scheduled(fixedRate = 5000)
     public void findAirports() {
-        int searchColumn = 2;
         if (applicationArguments.getSourceArgs().length != 0) {
             try {
                 searchColumn = Integer.parseInt(applicationArguments.getSourceArgs()[0]);

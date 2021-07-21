@@ -2,6 +2,8 @@ package com.nikitagru.search.search;
 
 import com.nikitagru.search.read.Reader;
 
+import java.util.TreeSet;
+
 /***
  * Класс поиска строки
  */
@@ -17,7 +19,7 @@ public class Searcher {
      * Выводит на консоль всех найденных Аэропортах и информацию о них
      */
     public void showAirports() {
-        StringBuffer result = new StringBuffer();
+        TreeSet<String> resultLines = new TreeSet<>();
 
         Reader reader = new Reader();
         String userInput = reader.consoleReader();
@@ -29,11 +31,21 @@ public class Searcher {
             String columnValue = getColumnValue(line);
             if (isMatch(columnValue, userInput, prefixArr)) {
                 String resultLine = line.substring(line.indexOf(",") + 1);
-                result.append(resultLine + "\n");
+                resultLines.add(resultLine);
             }
             line = reader.getLine();
         }
 
+        printResult(resultLines);
+    }
+
+    private void printResult(TreeSet<String> resultLines) {
+        StringBuffer result = new StringBuffer();
+
+        for (String line : resultLines) {
+            result.append(line + "\n");
+        }
+        System.out.println("Найденно строк: " + resultLines.size());
         System.out.println(result);
     }
 
