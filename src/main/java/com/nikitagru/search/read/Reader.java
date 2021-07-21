@@ -2,6 +2,8 @@ package com.nikitagru.search.read;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -16,19 +18,9 @@ public class Reader {
     private Pattern punctuationMark = Pattern.compile("^[-.?!)(,:^]+$");
 
     public Reader() {
-        Path path = null;
+        InputStream in = getClass().getResourceAsStream("/airports.dat");
 
-        try {
-            path = Paths.get(getClass().getClassLoader().getResource("airports.dat").toURI());
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            reader = Files.newBufferedReader(path);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        reader = new BufferedReader( new InputStreamReader(in));
     }
 
     public String consoleReader() {
@@ -49,7 +41,10 @@ public class Reader {
         String line = null;
 
         try {
-            line = reader.readLine().toLowerCase(Locale.ROOT);
+            line = reader.readLine();
+            if (line != null) {
+                line = line.toLowerCase(Locale.ROOT);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

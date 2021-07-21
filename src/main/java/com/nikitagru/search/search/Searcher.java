@@ -1,17 +1,13 @@
 package com.nikitagru.search.search;
 
 import com.nikitagru.search.read.Reader;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.ApplicationArguments;
-import org.springframework.scheduling.annotation.Scheduled;
 
 public class Searcher {
-    @Value("$search.column")
     private int searchColumn;
 
-    @Autowired
-    private ApplicationArguments applicationArguments;
+    public Searcher(int searchColumn) {
+        this.searchColumn = searchColumn;
+    }
 
     public void showAirports() {
         StringBuffer result = new StringBuffer();
@@ -25,11 +21,13 @@ public class Searcher {
         while (line != null) {
             String columnValue = getColumnValue(line);
             if (isMatch(columnValue, userInput, prefixArr)) {
-                String resultLine = line.substring(line.indexOf(","));
+                String resultLine = line.substring(line.indexOf(",") + 1);
                 result.append(resultLine + "\n");
             }
             line = reader.getLine();
         }
+
+        System.out.println(result);
     }
 
     private boolean isMatch(String line, String userInput, int[] prefixArr) {
@@ -85,18 +83,6 @@ public class Searcher {
     }
 
     private String getColumnValue(String line) {
-        if (applicationArguments.getSourceArgs()[0] == null) {
-            return line.split(",")[searchColumn - 1];
-        }
-        int column = 0;
-
-        try {
-            column = Integer.parseInt(applicationArguments.getSourceArgs()[0]);
-        } catch (NumberFormatException e) {
-            System.out.println("В качестве номера колонки введено не число");
-            e.printStackTrace();
-        }
-        return line.split(",")[column];
+        return line.split(",")[searchColumn - 1];
     }
-
 }
