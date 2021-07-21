@@ -6,12 +6,18 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+/***
+ * Класс расписания запуска алгоритма поиска аэропорта
+ */
 @Component
 public class ScheduledTasks {
 
     @Autowired
     private ApplicationArguments applicationArguments;
 
+    /***
+     * Алгоритм поиска
+     */
     @Scheduled(fixedRate = 5000)
     public void findAirports() {
         int searchColumn = 2;

@@ -2,13 +2,20 @@ package com.nikitagru.search.search;
 
 import com.nikitagru.search.read.Reader;
 
+/***
+ * Класс поиска строки
+ */
 public class Searcher {
+    // Колонка для поиска (отсчет идет с 1)
     private int searchColumn;
 
     public Searcher(int searchColumn) {
         this.searchColumn = searchColumn;
     }
 
+    /**
+     * Выводит на консоль всех найденных Аэропортах и информацию о них
+     */
     public void showAirports() {
         StringBuffer result = new StringBuffer();
 
@@ -30,6 +37,13 @@ public class Searcher {
         System.out.println(result);
     }
 
+    /***
+     * Поиск совпадений со строкой пользователя
+     * @param line строка из файла
+     * @param userInput ввод пользователя
+     * @param prefixArr массив префиксов
+     * @return true если найденно совпадение
+     */
     private boolean isMatch(String line, String userInput, int[] prefixArr) {
         int linePointer = 0;
         int userInputPointer = 0;
@@ -56,6 +70,11 @@ public class Searcher {
         return false;
     }
 
+    /***
+     * Создание массива префиксов
+     * @param userInput ввод пользователя
+     * @return массив префиксов
+     */
     private int[] createPrefixArr(String userInput) {
         int[] prefixArr = new int[userInput.length()];
 
@@ -82,6 +101,11 @@ public class Searcher {
         return prefixArr;
     }
 
+    /***
+     * Возвращает данные из колонки
+     * @param line строка из файла
+     * @return данные из колонки
+     */
     private String getColumnValue(String line) {
         return line.split(",")[searchColumn - 1];
     }
