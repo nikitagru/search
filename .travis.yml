@@ -1,5 +1,6 @@
 language: java
 sudo: false
+compiler: javac
 script: 
     - mvn package
     - cd target
