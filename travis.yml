@@ -1,0 +1,6 @@
+language: java
+sudo: false
+script: 
+    - mvn package
+    - cd target
+    - java -jar search-0.0.1-SNAPSHOT.jar
